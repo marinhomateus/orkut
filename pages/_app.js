@@ -2,6 +2,7 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
   body {
+    background: #d9e6f6;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
