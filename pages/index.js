@@ -1,6 +1,7 @@
 import MainGrid from "./../src/components/MainGrid";
 import Box from "./../src/components/Box";
-import { AlurakutMenu } from "../src/lib/AluraCommons";
+import { AlurakutMenu, OrkutNostalgicIconSet } from "../src/lib/AluraCommons";
+import { ProfileRelationsBoxWrapper } from "../src/components/Comunity";
 
 function ProfileSideBar(user) {
   return (
@@ -34,22 +35,29 @@ export default function Home() {
           <ProfileSideBar githubUser={githubUser} />
         </div>
         <div className="timelineArea" style={{ gridArea: "timelineArea" }}>
-          <Box>Timeline</Box>
+          <Box>
+            <OrkutNostalgicIconSet/>
+          </Box>
           <Box>Timeline</Box>
         </div>
         <div className="comunityArea" style={{ gridArea: "comunityArea" }}>
-          <Box>
-            Comunity
+          <ProfileRelationsBoxWrapper>
+            <h2 className="smallTitle">
+              Amigos ({people.length})
+            </h2>
             <ul>
               {people.map((currentUser) => {
                 return (
-                  <a href={`/users/${currentUser}`} key={currentUser}>
-                    <img src={`https://github.com/${currentUser}.png`} alt="Pessoas" />
-                  </a>
+                  <li>
+                    <a href={`/users/${currentUser}`} key={currentUser}>
+                      <img src={`https://github.com/${currentUser}.png`} alt="Pessoas" />
+                      <span>{currentUser}</span>
+                    </a>
+                  </li>
                 )
               })}
             </ul>
-          </Box>
+          </ProfileRelationsBoxWrapper>
           <Box>Comunity</Box>
         </div>
       </MainGrid>
