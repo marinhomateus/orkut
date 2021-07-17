@@ -33,8 +33,9 @@ export default function Home() {
   const [communities, setCommunities] = React.useState([
     {
       id: "654645197812395915",
-      title: "Alura Cursos Online",
-      image: "https://yt3.ggpht.com/ytc/AKedOLRszi3O39AB5-uw_1jkrxJppwegjToBgIKFIOqiiA=s88-c-k-c0x00ffffff-no-rj",
+      title: "Alura Cursos",
+      image:
+        "https://yt3.ggpht.com/ytc/AKedOLRszi3O39AB5-uw_1jkrxJppwegjToBgIKFIOqiiA=s88-c-k-c0x00ffffff-no-rj",
       link: "https://www.youtube.com/channel/UCo7EHzKF2zDFWszw7Dg4mPw",
     },
     {
@@ -128,7 +129,11 @@ export default function Home() {
               {communities.map((currentItem) => {
                 return (
                   <li key={currentItem.id}>
-                    <a href={`${currentItem.link}`} key={currentItem.title} target="_blank">
+                    <a
+                      href={`${currentItem.link}`}
+                      key={currentItem.title}
+                      target="_blank"
+                    >
                       <img src={currentItem.image} />
                       <span>{currentItem.title}</span>
                     </a>
@@ -143,7 +148,11 @@ export default function Home() {
               {people.map((currentUser) => {
                 return (
                   <li key={currentUser}>
-                    <a href={`/users/${currentUser}`} key={currentUser}>
+                    <a
+                      href={`https://github.com/${currentUser}`}
+                      key={currentUser}
+                      target="_blank"
+                    >
                       <img
                         src={`https://github.com/${currentUser}.png`}
                         alt="Pessoas"
