@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import MainGrid from "./../src/components/MainGrid";
 import Box from "./../src/components/Box";
 import {
@@ -10,7 +10,7 @@ import { ProfileRelationsBoxWrapper } from "../src/components/Comunity";
 
 function ProfileSideBar(user) {
   return (
-    <Box>
+    <Box as="aside">
       <img
         src={`https://github.com/${user.githubUser}.png`}
         alt="Mateus Marinho"
@@ -30,8 +30,27 @@ function ProfileSideBar(user) {
 
 export default function Home() {
   const githubUser = "marinhomateus";
-  const [communities, setCommunities] = React.useState(['Alurakut']);
-  console.log(communities)
+  const [communities, setCommunities] = React.useState([
+    {
+      id: "654645197812395915",
+      title: "Alura Cursos Online",
+      image: "https://yt3.ggpht.com/ytc/AKedOLRszi3O39AB5-uw_1jkrxJppwegjToBgIKFIOqiiA=s88-c-k-c0x00ffffff-no-rj",
+      link: "https://www.youtube.com/channel/UCo7EHzKF2zDFWszw7Dg4mPw",
+    },
+    {
+      id: "654645197812395915",
+      title: "Meu GitHUb",
+      image: "https://github.com/github.png",
+      link: "https://github.com/marinhomateus",
+    },
+    {
+      id: "654645197812395915",
+      title: "Fabio Akita",
+      image: "https://github.com/akitaonrails.png",
+      link: "https://www.youtube.com/channel/UCib793mnUOhWymCh2VJKplQ",
+    },
+  ]);
+  console.log(communities);
   const people = [
     "peas",
     "microsoft",
@@ -43,13 +62,14 @@ export default function Home() {
 
   return (
     <>
-      <AlurakutMenu />
+      <AlurakutMenu githubUser={githubUser} />
       <MainGrid>
         <div className="profileArea" style={{ gridArea: "profileArea" }}>
           <ProfileSideBar githubUser={githubUser} />
         </div>
         <div className="timelineArea" style={{ gridArea: "timelineArea" }}>
           <Box>
+            <h1 className="title">Bem Vindo(a)</h1>
             <OrkutNostalgicIconSet />
           </Box>
           <Box>
@@ -57,13 +77,21 @@ export default function Home() {
             <form
               onSubmit={function handleCreateComunity(event) {
                 event.preventDefault();
+                const formData = new FormData(event.target);
 
-                const updatedCommunities = [...communities, 'Alura Stars']
+                const community = {
+                  id: new Date().toISOString,
+                  title: formData.get("title"),
+                  image: formData.get("image"),
+                  link: formData.get("link"),
+                };
+                const updatedCommunities = [...communities, community];
                 setCommunities(updatedCommunities);
               }}
             >
               <div>
                 <input
+                  required
                   placeholder="Qual vai ser o nome da sua comunidade?"
                   name="title"
                   aria-label="Qual vai ser o nome da sua comunidade?"
@@ -72,9 +100,20 @@ export default function Home() {
               </div>
               <div>
                 <input
+                  required
                   placeholder="Coloque aqui sua URL para usarmos de capa"
                   name="image"
                   aria-label="Coloque aqui sua URL para usarmos de capa"
+                  type="url"
+                />
+              </div>
+              <div>
+                <input
+                  required
+                  placeholder="Coloque aqui sua URL para usarmos como link"
+                  name="link"
+                  aria-label="Coloque aqui sua URL para usarmos como link"
+                  type="url"
                 />
               </div>
               <button>Criar Comunidade</button>
@@ -83,15 +122,15 @@ export default function Home() {
         </div>
         <div className="comunityArea" style={{ gridArea: "comunityArea" }}>
           <ProfileRelationsBoxWrapper>
+            <h2 className="smallTitle">Comunidades ({communities.length})</h2>
+
             <ul>
               {communities.map((currentItem) => {
                 return (
-                  <li>
-                    <a href={`/users/${currentItem}`} key={currentItem}>
-                      <img
-                        src={`https://placehold.it/300x300`}
-                      />
-                      <span>{currentItem}</span>
+                  <li key={currentItem.id}>
+                    <a href={`${currentItem.link}`} key={currentItem.title} target="_blank">
+                      <img src={currentItem.image} />
+                      <span>{currentItem.title}</span>
                     </a>
                   </li>
                 );
@@ -103,7 +142,7 @@ export default function Home() {
             <ul>
               {people.map((currentUser) => {
                 return (
-                  <li>
+                  <li key={currentUser}>
                     <a href={`/users/${currentUser}`} key={currentUser}>
                       <img
                         src={`https://github.com/${currentUser}.png`}
@@ -116,7 +155,6 @@ export default function Home() {
               })}
             </ul>
           </ProfileRelationsBoxWrapper>
-          <Box>Comunity</Box>
         </div>
       </MainGrid>
     </>
