@@ -28,8 +28,36 @@ function ProfileSideBar(user) {
   );
 }
 
+function ProfileRelationsBox(props) {
+  return (
+    <ProfileRelationsBoxWrapper>
+      <h2 className="smallTitle">
+        {props.title} ({props.items.length})
+      </h2>
+
+      <ul>
+        {props.items.map((currentItem) => {
+          return (
+            <li key={currentItem.id}>
+              <a
+                href={`${currentItem.link}`}
+                key={currentItem.title}
+                target="_blank"
+              >
+                <img src={currentItem.image} />
+                <span>{currentItem.title}</span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </ProfileRelationsBoxWrapper>
+  );
+}
+
 export default function Home() {
   const githubUser = "marinhomateus";
+
   const [communities, setCommunities] = React.useState([
     {
       id: "654645197812395915",
@@ -39,19 +67,20 @@ export default function Home() {
       link: "https://www.youtube.com/channel/UCo7EHzKF2zDFWszw7Dg4mPw",
     },
     {
-      id: "654645197812395915",
+      id: "654645197812385915",
       title: "Meu GitHUb",
       image: "https://github.com/github.png",
       link: "https://github.com/marinhomateus",
     },
     {
-      id: "654645197812395915",
+      id: "654645197812375915",
       title: "Fabio Akita",
       image: "https://github.com/akitaonrails.png",
       link: "https://www.youtube.com/channel/UCib793mnUOhWymCh2VJKplQ",
     },
   ]);
   console.log(communities);
+
   const people = [
     "peas",
     "microsoft",
@@ -60,6 +89,24 @@ export default function Home() {
     "marcobrunodev",
     "marinhomateus",
   ];
+
+  //declarar um metodo fora e utiliza-lo dentro do objeto
+  const friends = [
+    {
+
+    }
+  ]
+
+  const [followers, setFollowers] = React.useState([]);
+  React.useEffect(() => {
+    fetch('https://api.github.com/users/micaelomota/followers')
+    .then((response) => {
+      return response.json();
+    })
+    .then((end) => {
+      setFollowers(end);
+    })
+  }, [])
 
   return (
     <>
@@ -122,7 +169,9 @@ export default function Home() {
           </Box>
         </div>
         <div className="comunityArea" style={{ gridArea: "comunityArea" }}>
-          <ProfileRelationsBoxWrapper>
+          <ProfileRelationsBox title="Seguidores" items={followers}/>
+          <ProfileRelationsBox title="Comunidades" items={communities}/>
+          {/* <ProfileRelationsBoxWrapper>
             <h2 className="smallTitle">Comunidades ({communities.length})</h2>
 
             <ul>
@@ -141,7 +190,7 @@ export default function Home() {
                 );
               })}
             </ul>
-          </ProfileRelationsBoxWrapper>
+          </ProfileRelationsBoxWrapper> */}
           <ProfileRelationsBoxWrapper>
             <h2 className="smallTitle">Amigos ({people.length})</h2>
             <ul>

@@ -7,7 +7,7 @@ React
 Next
 Styled Components
 Vercel
-Dato
+Dato (ferramenta para que possamos manipular os conteúdos)
 
 
 
