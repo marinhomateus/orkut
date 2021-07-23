@@ -91,22 +91,22 @@ export default function Home() {
   ];
 
   //declarar um metodo fora e utiliza-lo dentro do objeto
-  const friends = [
-    {
-
-    }
-  ]
+  const friends = [{}];
 
   const [followers, setFollowers] = React.useState([]);
   React.useEffect(() => {
-    fetch('https://api.github.com/users/micaelomota/followers')
-    .then((response) => {
-      return response.json();
-    })
-    .then((end) => {
-      setFollowers(end);
-    })
-  }, [])
+    fetch("https://api.github.com/users/micaelomota/followers")
+      .then((response) => {
+        return response.json();
+      })
+      .then((end) => {
+        setFollowers(end);
+      });
+
+    fetch("", {
+      method: "POST",
+    });
+  }, []);
 
   return (
     <>
@@ -169,8 +169,8 @@ export default function Home() {
           </Box>
         </div>
         <div className="comunityArea" style={{ gridArea: "comunityArea" }}>
-          <ProfileRelationsBox title="Seguidores" items={followers}/>
-          <ProfileRelationsBox title="Comunidades" items={communities}/>
+          <ProfileRelationsBox title="Seguidores" items={followers} />
+          <ProfileRelationsBox title="Comunidades" items={communities} />
           {/* <ProfileRelationsBoxWrapper>
             <h2 className="smallTitle">Comunidades ({communities.length})</h2>
 
