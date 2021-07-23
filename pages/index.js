@@ -40,11 +40,11 @@ function ProfileRelationsBox(props) {
           return (
             <li key={currentItem.id}>
               <a
-                href={`${currentItem.link}`}
+                href={`${currentItem.linkUrl}`}
                 key={currentItem.title}
                 target="_blank"
               >
-                <img src={currentItem.image} />
+                <img src={currentItem.imageUrl} />
                 <span>{currentItem.title}</span>
               </a>
             </li>
@@ -58,28 +58,7 @@ function ProfileRelationsBox(props) {
 export default function Home() {
   const githubUser = "marinhomateus";
 
-  const [communities, setCommunities] = React.useState([
-    {
-      id: "654645197812395915",
-      title: "Alura Cursos",
-      image:
-        "https://yt3.ggpht.com/ytc/AKedOLRszi3O39AB5-uw_1jkrxJppwegjToBgIKFIOqiiA=s88-c-k-c0x00ffffff-no-rj",
-      link: "https://www.youtube.com/channel/UCo7EHzKF2zDFWszw7Dg4mPw",
-    },
-    {
-      id: "654645197812385915",
-      title: "Meu GitHUb",
-      image: "https://github.com/github.png",
-      link: "https://github.com/marinhomateus",
-    },
-    {
-      id: "654645197812375915",
-      title: "Fabio Akita",
-      image: "https://github.com/akitaonrails.png",
-      link: "https://www.youtube.com/channel/UCib793mnUOhWymCh2VJKplQ",
-    },
-  ]);
-  console.log(communities);
+  const [communities, setCommunities] = React.useState([]);
 
   const people = [
     "peas",
@@ -103,9 +82,29 @@ export default function Home() {
         setFollowers(end);
       });
 
-    fetch("", {
-      method: "POST",
-    });
+      fetch('https://graphql.datocms.com/', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'f19b8d7e7ffb43069cf72d103741fd',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({ "query": `query {
+          allCommunities {
+            id 
+            title
+            imageUrl
+            linkUrl
+            creatorslug
+          }
+        }` })
+      })
+      .then((response) => response.json()) // Pega o retorno do response.json() e já retorna
+      .then((respostaCompleta) => {
+        const comunidadesVindasDoDato = respostaCompleta.data.allCommunities;
+        console.log(comunidadesVindasDoDato)
+        setCommunities(comunidadesVindasDoDato)
+      })
   }, []);
 
   return (
