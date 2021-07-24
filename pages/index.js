@@ -127,10 +127,10 @@ export default function Home() {
                 const formData = new FormData(event.target);
 
                 const community = {
-                  id: new Date().toISOString,
+                  //{id: new Date().toISOString,}
                   title: formData.get("title"),
-                  image: formData.get("image"),
-                  link: formData.get("link"),
+                  imageUrl: formData.get("imageUrl"),
+                  linkUrl: formData.get("linkUrl"),
                 };
                 const updatedCommunities = [...communities, community];
                 setCommunities(updatedCommunities);
