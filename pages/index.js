@@ -79,6 +79,7 @@ export default function Home() {
         return response.json();
       })
       .then((end) => {
+        console.log(end);
         setFollowers(end);
       });
 
@@ -131,9 +132,24 @@ export default function Home() {
                   title: formData.get("title"),
                   imageUrl: formData.get("imageUrl"),
                   linkUrl: formData.get("linkUrl"),
+                  creatorslug: githubUser,
                 };
-                const updatedCommunities = [...communities, community];
-                setCommunities(updatedCommunities);
+
+                fetch('/api/communities', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(community)
+                })
+                .then(async (response) =>{
+                  const data = await response.json();
+                  console.log(data);
+                  const community = data.record;
+                  const updatedCommunities = [...communities, community];
+                  setCommunities(updatedCommunities);
+                })
+
               }}
             >
               <div>
@@ -149,7 +165,7 @@ export default function Home() {
                 <input
                   required
                   placeholder="Coloque aqui sua URL para usarmos de capa"
-                  name="image"
+                  name="imageUrl"
                   aria-label="Coloque aqui sua URL para usarmos de capa"
                   type="url"
                 />
@@ -158,7 +174,7 @@ export default function Home() {
                 <input
                   required
                   placeholder="Coloque aqui sua URL para usarmos como link"
-                  name="link"
+                  name="linkUrl"
                   aria-label="Coloque aqui sua URL para usarmos como link"
                   type="url"
                 />

@@ -7,13 +7,19 @@ export default async function requestReciver(request, response) {
 
     const record = await client.items.create({
       itemType: "979707",
-      title: "Test",
-      imageUrl: "https://github.com/gvanrossum.png",
-      linkUrl: "https://github.com/gvanrossum",
-      creatorslug: "gvanrossum",
+      ...request.body,
+    //   title: "Test",
+    //   imageUrl: "https://github.com/gvanrossum.png",
+    //   linkUrl: "https://github.com/gvanrossum",
+    //   creatorslug: "gvanrossum",
     });
     response.json({
       record: record,
     });
+    return;
   }
+
+  res.status(404).json({
+      message: "404 Not Found",
+  })
 }
